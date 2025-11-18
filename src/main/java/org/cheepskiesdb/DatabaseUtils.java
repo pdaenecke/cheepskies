@@ -4,6 +4,7 @@ import org.cheepskies.common.ValueObject;
 import org.cheepskiesexceptions.AddToFlightListException;
 import org.cheepskiesexceptions.FlightSchedulingException;
 import org.cheepskiesexceptions.GetCustomerRecordException;
+import org.cheepskiesexceptions.LoginException;
 
 import javax.xml.transform.Result;
 import java.sql.Connection;
@@ -13,19 +14,41 @@ import java.sql.SQLException;
 
 public class DatabaseUtils {
 
-    public boolean usernameScan(String username) {
-        String query = "SELECT COUNT(*) FROM users WHERE username = ?";
+    public static ValueObject usernameScan(ValueObject vo) throws LoginException {
+        if (vo.getCustomer() == null) {
+            vo.operationResult = false;
+            throw new LoginException("ValueObject must contain customer information");
+        }
 
-        try (Connection conn = DatabaseConnector.dbConnect(); PreparedStatement statement = conn.prepareStatement(query)) {
+        String username = vo.getCredentials().getUsername();
+
+        if (username == null || username.trim().isEmpty()) {
+            vo.operationResult = false;
+            throw new LoginException("Username cannot be empty");
+        }
+
+        String query = "SELECT COUNT(*) FROM credentials WHERE username = ?";
+
+        try (Connection conn = DatabaseConnector.dbConnect();
+             PreparedStatement statement = conn.prepareStatement(query)) {
 
             statement.setString(1, username);
-
             ResultSet rs = statement.executeQuery();
-            return rs.next();
+
+            // operationResult = true means username EXISTS (not available)
+            // operationResult = false means username is AVAILABLE
+            if (rs.next() && rs.getInt(1) > 0) {
+                vo.operationResult = true;  // Username exists
+            } else {
+                vo.operationResult = false; // Username available
+            }
+
+            return vo;
 
         } catch (SQLException e) {
             System.out.println(e);
-            return false;
+            vo.operationResult = false;
+            throw new LoginException("Database error while scanning username: " + e.getMessage());
         }
     }
 
