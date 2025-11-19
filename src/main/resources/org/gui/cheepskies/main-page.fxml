@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cheepskies.ui.MainController">
+   <children>
+      <TableView fx:id="flightsTableF" layoutX="153.0" layoutY="347.0" prefHeight="200.0" prefWidth="619.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Flight ID" />
+            <TableColumn prefWidth="63.20001220703125" text="Arrive At" />
+            <TableColumn prefWidth="79.20001220703125" text="Depart From" />
+          <TableColumn prefWidth="75.0" text="Arrival Date" />
+            <TableColumn prefWidth="96.800048828125" text="Departure Date" />
+            <TableColumn prefWidth="76.00006103515625" text="Arrival Time" />
+            <TableColumn prefWidth="93.60003662109375" text="Departure Time" />
+            <TableColumn prefWidth="55.199938964843795" text="Price" />
+        </columns>
+      </TableView>
+      <TableView fx:id="flightsTable" layoutX="153.0" layoutY="83.0" prefHeight="200.0" prefWidth="619.0">
+        <columns>
+          <TableColumn fx:id="flightIdT" prefWidth="75.0" text="Flight ID" />
+            <TableColumn fx:id="arrivalLocationT" prefWidth="61.60003662109375" text="Arrive At" />
+            <TableColumn fx:id="departureLocationT" prefWidth="79.20001220703125" text="Depart From" />
+          <TableColumn fx:id="arrivalDateT" prefWidth="75.0" text="Arrival Date" />
+            <TableColumn fx:id="departureDateT" prefWidth="95.199951171875" text="Departure Date" />
+            <TableColumn fx:id="arrivalTimeT" prefWidth="76.0" text="Arrival Time" />
+            <TableColumn fx:id="departureTimeT" prefWidth="98.4000244140625" text="Departure Time" />
+            <TableColumn fx:id="priceT" prefWidth="55.199938964843795" text="Price" />
+        </columns>
+      </TableView>
+      <Button fx:id="add" layoutX="326.0" layoutY="300.0" mnemonicParsing="false" text="Add Flight" />
+      <Button fx:id="remove" layoutX="488.0" layoutY="300.0" mnemonicParsing="false" text="Remove Flight" />
+      <Button fx:id="search" layoutX="787.0" layoutY="25.0" mnemonicParsing="false" text="Search Flights" />
+      <Button fx:id="logout" layoutX="29.0" layoutY="547.0" mnemonicParsing="false" text="Logout" />
+   </children>
+</AnchorPane>
