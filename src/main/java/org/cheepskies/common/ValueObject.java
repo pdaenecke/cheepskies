@@ -9,12 +9,12 @@ public class ValueObject {
     private String action;
     private Customer customer;
     private Flight flight;
-    private Credentials credentials;
+   // private Credentials credentials;
     private ArrayList<Customer> customers;
 
-    public void setCredentials(Credentials credentials) {
-        this.credentials = credentials;
-    }
+//    public void setCredentials(Credentials credentials) {
+//        this.credentials = credentials;
+//    }
 
     public boolean operationResult;
 
