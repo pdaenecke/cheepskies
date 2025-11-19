@@ -1,5 +1,6 @@
 package org.cheepskies.common;
 
+import org.cheepskies.ui.Credentials;
 import org.cheepskies.ui.Customer;
 import org.cheepskies.ui.Flight;
 import java.util.ArrayList;
@@ -8,11 +9,19 @@ public class ValueObject {
     private String action;
     private Customer customer;
     private Flight flight;
+    private Credentials credentials;
     private ArrayList<Customer> customers;
 
-    private boolean operationResult;
 
+    public Credentials getCredentials() {
+        return credentials;
+    }
 
+    public void setCredentials(Credentials credentials) {
+        this.credentials = credentials;
+    }
+
+    public boolean operationResult;
 
     public String getAction() {
         return action;
@@ -46,10 +55,13 @@ public class ValueObject {
         this.customers = customers;
     }
 
+
+
+
     public ValueObject(){
         customer = new Customer();
         flight = new Flight();
         customers = new ArrayList<>();
-
+//create customers?
     }
 }

@@ -5,12 +5,22 @@ public class Customer {
     private String mI;
     private String lastName;
     private String email;
+    private int customerId;
 
-    public Customer(String firstName,String mI, String lastName, String email){
+    public Customer(int customerId, String firstName,String mI, String lastName, String email){
         this.firstName = firstName;
         this.mI = mI;
         this.lastName = lastName;
         this.email = email;
+        this.customerId = customerId;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
     public String getFirstName() {
@@ -48,6 +58,8 @@ public class Customer {
     public Customer() {
 
     }
+
+
 //overide equals
 
 }

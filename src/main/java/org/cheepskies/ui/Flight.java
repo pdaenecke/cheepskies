@@ -8,6 +8,16 @@ public class Flight {
     private int flightDuration;
     private String departureDate;
     private String price;
+    public int flightId;
+
+
+    public int getFlightId(){
+        return flightId;
+    }
+
+    public void setFlightId(int flightId){
+        this.flightId = flightId;
+    }
 
     public String getDepartureLocation() {
         return departureLocation;
