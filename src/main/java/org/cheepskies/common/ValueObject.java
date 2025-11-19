@@ -10,7 +10,9 @@ public class ValueObject {
     private Flight flight;
     private ArrayList<Customer> customers;
 
-    public boolean operationResult;
+    private boolean operationResult;
+
+
 
     public String getAction() {
         return action;
@@ -48,6 +50,6 @@ public class ValueObject {
         customer = new Customer();
         flight = new Flight();
         customers = new ArrayList<>();
-//create customers?
+
     }
 }

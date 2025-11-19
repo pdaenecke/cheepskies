@@ -70,6 +70,9 @@ public class RegistrationController {
 
             }
 
+            //inject SQL statement to pull login cred
+            //try ()
+
             System.out.print("Registration complete.");
 
         } catch (SQLException e) {
