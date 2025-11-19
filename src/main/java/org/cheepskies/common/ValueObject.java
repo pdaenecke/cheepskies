@@ -1,6 +1,5 @@
 package org.cheepskies.common;
 
-import org.cheepskies.ui.Credentials;
 import org.cheepskies.ui.Customer;
 import org.cheepskies.ui.Flight;
 import java.util.ArrayList;
