@@ -1,6 +1,8 @@
 package org.cheepskiesdb;
 
+import com.google.protobuf.Value;
 import org.cheepskies.common.ValueObject;
+import org.cheepskies.ui.Customer;
 import org.cheepskiesexceptions.AddToFlightListException;
 import org.cheepskiesexceptions.FlightSchedulingException;
 import org.cheepskiesexceptions.GetCustomerRecordException;
@@ -280,38 +282,6 @@ public class DatabaseUtils {
         }
     }
 
-    public static boolean loginValidation(String username, String password) {
-        String query = "SELECT password FROM credentials WHERE username = ?";
-
-        try (Connection conn = DatabaseConnector.dbConnect(); PreparedStatement statement = conn.prepareStatement(query)) {
-
-            statement.setString(1, username);
-
-            // this creates an object of the resulting SQL query table
-            ResultSet rs = statement.executeQuery();
-
-            // SQL queries set the cursor the row BEFORE resulting table, rs.next() moves the cursor to next row
-            // this is different, if !rs.next specifies, if the next row does NOT exist, execute if statement
-            // in that instance it will false
-            if (!rs.next()) {
-                return false;
-            }
-
-            // looks at the table, which is only one row as username is a unique key
-            // it then grabs the String value of the password table
-
-            String pass = rs.getString("password");
-
-            // if the password in the table is equal to the password parameter, return true
-            return pass.equals(password);
-
-        } catch (SQLException e) {
-            System.out.println(e);
-            return false;
-        }
-
-    }
-
     public static boolean emailScan(String email) {
         String query = "SELECT 1 FROM customers WHERE email = ? LIMIT 1";
 
@@ -332,12 +302,12 @@ public class DatabaseUtils {
         }
     }
 
-    public static boolean usernameScan(String user) {
+    public static boolean usernameScan(Customer customer) {
         String query = "SELECT 1 FROM credentials WHERE username = ? LIMIT 1";
 
         try (Connection conn = DatabaseConnector.dbConnect(); PreparedStatement statement = conn.prepareStatement(query)) {
 
-            statement.setString(1, user);
+            statement.setString(1, customer.getUsername());
 
             // this creates an object of the resulting SQL query table
             ResultSet rs = statement.executeQuery();
@@ -349,6 +319,65 @@ public class DatabaseUtils {
         } catch (SQLException e) {
             System.out.println(e);
             return false;
+        }
+    }
+
+    public static boolean loginValidation(Customer customer) {
+        String query = "SELECT password FROM credentials WHERE username = ?";
+
+        try (Connection conn = DatabaseConnector.dbConnect(); PreparedStatement statement = conn.prepareStatement(query)) {
+
+            statement.setString(1, customer.getUsername());
+
+            // this creates an object of the resulting SQL query table
+            ResultSet rs = statement.executeQuery();
+
+            // SQL queries set the cursor the row BEFORE resulting table, rs.next() moves the cursor to next row
+            // this is different, if !rs.next specifies, if the next row does NOT exist, execute if statement
+            // in that instance it will false
+            if (!rs.next()) {
+                return false;
+            }
+
+            // looks at the table, which is only one row as username is a unique key
+            // it then grabs the String value of the password table
+
+            String pass = rs.getString("password");
+
+            // if the password in the table is equal to the password parameter, return true
+            return pass.equals(customer.getPassword());
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
+
+    }
+
+    public static void login(ValueObject vo) {
+        Customer c = vo.getCustomer();
+
+        String query = "SELECT cr.customer_id, c.first_name, c.middle_initial, c.last_name, c.email " +
+                "FROM credentials cr " +
+                "JOIN customers c ON cr.customer_id = c.customer_id " +
+                "WHERE cr.username = ?";
+
+        try (Connection conn = DatabaseConnector.dbConnect(); PreparedStatement statement = conn.prepareStatement(query)) {
+
+            statement.setString(1, c.getUsername());
+
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                c.setCustomerId(rs.getInt("customer_id"));
+                c.setEmail(rs.getString("email"));
+                c.setFirstName(rs.getString("first_name"));
+                c.setmI(rs.getString("middle_initial"));
+                c.setLastName(rs.getString("last_name"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
         }
     }
 }
