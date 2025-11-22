@@ -38,7 +38,7 @@ public class RegistrationController {
 
     @FXML
     private TextField username;
-/*
+
     @FXML
     void accountCreation(MouseEvent event) {
         String first = firstName.getText();
@@ -61,7 +61,7 @@ public class RegistrationController {
         }
 
         // these two methods are imported DatabaseUtils to check if the username or email already exist, if they do registration is cancelled.
-        if (DatabaseUtils.usernameScan(user)) {
+        if (DatabaseUtils.userScan(user)) {
             registrationStatus.setText("Username already exists.");
             return; // stops registration
         }
@@ -114,11 +114,11 @@ public class RegistrationController {
             //inject SQL statement to pull login cred
             //try ()
 
+            registrationStatus.setText("Registration complete.");
             System.out.print("Registration complete.");
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-*/
 }

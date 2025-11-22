@@ -60,33 +60,6 @@ public class LoginController {
 
         if (vo.operationResult) { loginStatus.setText("Login success."); }
         else { loginStatus.setText("Login failed."); }
-
-        Customer c = vo.getCustomer();
-
-
-        /* checks if either field is empty
-        if (user.isEmpty() || pass.isEmpty()) {
-            loginStatus.setText("One or more fields are empty.");
-            return;
-        }
-
-        // checks if username exists
-        if (!DatabaseUtils.usernameScan(user)) {
-            loginStatus.setText("Username does not exist.");
-            return;
-        }
-
-        // password check
-        if (!DatabaseUtils.loginValidation(user, pass)) {
-            loginStatus.setText("Password is incorrect.");
-            return;
-        }
-
-        // if any previous statement is not initialized, login is successful
-        loginStatus.setText("Login successful!");
-
-        ValueObject vo = new ValueObject();
-*/
     }
 
     @FXML
