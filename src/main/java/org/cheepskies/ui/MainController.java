@@ -75,4 +75,36 @@ public class MainController /*implements Initializable*/ {
 
     @FXML
     private Button logout;
+
+    @FXML
+    private TableColumn<Flight, String> flightIdF;
+
+
+    @FXML
+    private TableColumn<Flight, String> priceF;
+
+
+    @FXML
+    private TableColumn<Flight, String> departureDateF;
+
+
+    @FXML
+    private TableColumn<Flight, String> departureTimeF;
+
+
+    @FXML
+    private TableColumn<Flight, String> arrivalTimeF;
+
+
+    @FXML
+    private TableColumn<Flight, String> arrivalDateF;
+
+
+    @FXML
+    private TableColumn<Flight, String> departureLocationF;
+
+
+    @FXML
+    private TableColumn<Flight, String> arrivalLocationF;
+
 }
