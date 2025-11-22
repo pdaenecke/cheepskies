@@ -5,19 +5,18 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cheepskies.ui.MainController">
    <children>
       <TableView fx:id="flightsTableF" layoutX="153.0" layoutY="347.0" prefHeight="200.0" prefWidth="619.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Flight ID" />
-            <TableColumn prefWidth="63.20001220703125" text="Arrive At" />
-            <TableColumn prefWidth="79.20001220703125" text="Depart From" />
-          <TableColumn prefWidth="75.0" text="Arrival Date" />
-            <TableColumn prefWidth="96.800048828125" text="Departure Date" />
-            <TableColumn prefWidth="76.00006103515625" text="Arrival Time" />
-            <TableColumn prefWidth="93.60003662109375" text="Departure Time" />
-            <TableColumn prefWidth="55.199938964843795" text="Price" />
+          <TableColumn fx:id="flightIdF" prefWidth="75.0" text="Flight ID" />
+            <TableColumn fx:id="arrivalLocationF" prefWidth="63.20001220703125" text="Arrive At" />
+            <TableColumn fx:id="departureLocationF" prefWidth="79.20001220703125" text="Depart From" />
+          <TableColumn fx:id="arrivalDateF" prefWidth="75.0" text="Arrival Date" />
+            <TableColumn fx:id="departureDateF" prefWidth="96.800048828125" text="Departure Date" />
+            <TableColumn fx:id="arrivalTimeF" prefWidth="76.00006103515625" text="Arrival Time" />
+            <TableColumn fx:id="departureTimeF" prefWidth="93.60003662109375" text="Departure Time" />
+            <TableColumn fx:id="priceF" prefWidth="55.199938964843795" text="Price" />
         </columns>
       </TableView>
       <TableView fx:id="flightsTable" layoutX="153.0" layoutY="83.0" prefHeight="200.0" prefWidth="619.0">
