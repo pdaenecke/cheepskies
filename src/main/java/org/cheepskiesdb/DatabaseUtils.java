@@ -302,6 +302,27 @@ public class DatabaseUtils {
         }
     }
 
+    // usernameScan functionality only for usage in registration
+    public static boolean userScan(String user) {
+        String query = "SELECT 1 FROM credentials WHERE username = ? LIMIT 1";
+
+        try (Connection conn = DatabaseConnector.dbConnect(); PreparedStatement statement = conn.prepareStatement(query)) {
+
+            statement.setString(1, user);
+
+            // this creates an object of the resulting SQL query table
+            ResultSet rs = statement.executeQuery();
+
+            // SQL queries set the cursor the row BEFORE resulting table, rs.next() moves the cursor to next row
+            // return rs.next(); says, does the first row have a value? If it does, return true.
+            return rs.next();
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+
     public static boolean usernameScan(Customer customer) {
         String query = "SELECT 1 FROM credentials WHERE username = ? LIMIT 1";
 
