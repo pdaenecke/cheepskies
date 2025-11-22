@@ -38,7 +38,7 @@ public class RegistrationController {
 
     @FXML
     private TextField username;
-
+/*
     @FXML
     void accountCreation(MouseEvent event) {
         String first = firstName.getText();
@@ -120,5 +120,5 @@ public class RegistrationController {
             throw new RuntimeException(e);
         }
     }
-
+*/
 }
