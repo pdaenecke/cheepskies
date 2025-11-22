@@ -61,7 +61,7 @@ public class LoginController {
     @FXML
     void registrationRedirect(MouseEvent event) throws IOException {
         try {
-            RegistrationWindow.open();
+            RegistrationApplication.openRegistration();
         } catch (IOException e) {
             System.out.print(e);
         }
