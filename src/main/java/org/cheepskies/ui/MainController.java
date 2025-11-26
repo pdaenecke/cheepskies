@@ -9,6 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import org.cheepskies.common.ValueObject;
 import org.cheepskiesdb.DatabaseConnector;
 
@@ -332,6 +333,25 @@ public class MainController implements Initializable {
 
         } catch (Exception e) {
             System.err.println("Error during remove flight: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    public void logout(MouseEvent event) {
+        try {
+            // Open login page
+            LoginApplication loginApp = new LoginApplication();
+            Stage loginStage = new Stage();
+            loginApp.start(loginStage);
+
+            // Close current main page
+            Stage currentStage = (Stage) logout.getScene().getWindow();
+            currentStage.close();
+
+            System.out.println("User logged out successfully.");
+
+        } catch (Exception e) {
+            System.err.println("Error during logout: " + e.getMessage());
         }
     }
 

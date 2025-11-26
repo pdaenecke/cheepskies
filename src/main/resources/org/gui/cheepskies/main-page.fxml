@@ -34,7 +34,7 @@
       <Button fx:id="add" layoutX="326.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#addFlight" text="Add Flight" />
       <Button fx:id="remove" layoutX="488.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#removeFlight" text="Remove Flight" />
       <Button fx:id="search" layoutX="787.0" layoutY="25.0" mnemonicParsing="false" text="Search Flights" />
-      <Button fx:id="logout" layoutX="29.0" layoutY="547.0" mnemonicParsing="false" text="Logout" />
+      <Button fx:id="logout" layoutX="29.0" layoutY="547.0" mnemonicParsing="false" onMouseClicked="#logout" text="Logout" />
       <Button fx:id="refresh" layoutX="804.0" layoutY="547.0" mnemonicParsing="false" onMouseClicked="#refreshTables" text="Refresh" />
    </children>
 </AnchorPane>
