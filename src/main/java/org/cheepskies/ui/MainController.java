@@ -9,6 +9,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import org.cheepskies.common.ValueObject;
 import org.cheepskiesdb.DatabaseConnector;
 
 import javafx.scene.input.MouseEvent;
@@ -124,6 +126,7 @@ public class MainController implements Initializable {
 
     private int currentUserId;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -161,11 +164,13 @@ public class MainController implements Initializable {
         }
     }
 
+
     //Sets current user ID after login, and while accessing MainApplication
     public void setCurrentUser(int userId) {
         this.currentUserId = userId;
         loadUserFlights();
     }
+
 
     //loads all available flights into flightTable
     private void loadAllFlights() {
@@ -212,6 +217,7 @@ public class MainController implements Initializable {
         }
     }
 
+
     //Loads users personal flights into flightTableF
     private void loadUserFlights() {
 
@@ -248,6 +254,8 @@ public class MainController implements Initializable {
         }
     }
 
+
+    @FXML
     //Refreshes tables based on click of refresh button
     public void refreshTables(MouseEvent event) {
         System.out.println("Refreshing tables...");
@@ -256,6 +264,95 @@ public class MainController implements Initializable {
             loadUserFlights();
         }
         System.out.println("Tables refreshed.");
+    }
+
+
+    @FXML
+    //adds flights to flightsTableF when add button is pressed
+    public void addFlight(MouseEvent event) {
+        Flight selectedFlight = flightsTable.getSelectionModel().getSelectedItem(); //whatever flight is selected
+
+        if (selectedFlight == null) {
+            System.out.println("No flight selected to add.");
+            return;
+        }
+
+        ValueObject vo = new ValueObject();
+        vo.setAction("addFlight"); //switch case from facade
+        vo.setFlight(selectedFlight);
+
+        Customer customer = new Customer();
+        customer.setCustomerId(currentUserId);
+        vo.setCustomer(customer);
+
+        try {
+            Facade.process(vo);//facade process is run with set flight and customer
+
+            /* boolean operation result of bizlogic.addFlightToCustomer */
+            if (vo.operationResult) {
+                userFlights.add(selectedFlight);
+                System.err.println("Flight " + selectedFlight.getFlightId() + " added successfully.");
+            } else {
+                System.err.println("Failed to add flight.");
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error during add flight: " + e.getMessage());
+        }
+    }
+
+
+    @FXML
+    //removes flights from flightsTableF when remove button is pressed
+    public void removeFlight(MouseEvent event) {
+        Flight selectedFlight = flightsTableF.getSelectionModel().getSelectedItem(); //whatever flight is selected
+
+        if (selectedFlight == null) {
+            System.out.println("No flight selected to remove.");
+            return;
+        }
+
+        ValueObject vo = new ValueObject();
+        vo.setAction("removeFlight"); //switch case from facade
+        vo.setFlight(selectedFlight);
+
+        Customer customer = new Customer();
+        customer.setCustomerId(currentUserId);
+        vo.setCustomer(customer);
+
+        try {
+            Facade.process(vo); //facade process is run with set flight and customer
+
+            //boolean operationResult of BizLogic.removeFlightFromCustomer
+            if (vo.operationResult) {
+                userFlights.remove(selectedFlight); //removes flight from observablelist
+                System.out.println("Flight " + selectedFlight.getFlightId() + " removed successfully.");
+            } else {
+                System.err.println("Failed to remove flight.");
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error during remove flight: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    public void logout(MouseEvent event) {
+        try {
+            // Open login page
+            LoginApplication loginApp = new LoginApplication();
+            Stage loginStage = new Stage();
+            loginApp.start(loginStage);
+
+            // Close current main page
+            Stage currentStage = (Stage) logout.getScene().getWindow();
+            currentStage.close();
+
+            System.out.println("User logged out successfully.");
+
+        } catch (Exception e) {
+            System.err.println("Error during logout: " + e.getMessage());
+        }
     }
 
 
