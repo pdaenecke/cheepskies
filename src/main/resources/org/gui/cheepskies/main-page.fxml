@@ -37,7 +37,7 @@
       </TableView>
       <Button fx:id="add" layoutX="372.0" layoutY="302.0" mnemonicParsing="false" onMouseClicked="#addFlight" text="Add Flight" />
       <Button fx:id="remove" layoutX="371.0" layoutY="662.0" mnemonicParsing="false" onMouseClicked="#removeFlight" text="Remove Flight" />
-      <Button fx:id="searchButton" layoutX="864.0" layoutY="28.0" mnemonicParsing="false" onMouseClicked="#goToSearchPage" text="Admin Flights Page" />
+      <Button fx:id="toAdminPageButton" layoutX="864.0" layoutY="28.0" mnemonicParsing="false" onMouseClicked="#goToAdminPageClick" text="Admin Flights Page" />
       <Button fx:id="logout" layoutX="14.0" layoutY="686.0" mnemonicParsing="false" onMouseClicked="#logout" text="Logout" />
       <Button fx:id="refresh" layoutX="928.0" layoutY="665.0" mnemonicParsing="false" onMouseClicked="#refreshTables" text="Refresh" />
       <Button fx:id="searchButton1" layoutX="159.0" layoutY="302.0" mnemonicParsing="false" onMouseClicked="#searchFlights" prefHeight="26.0" prefWidth="131.0" text="Search" />

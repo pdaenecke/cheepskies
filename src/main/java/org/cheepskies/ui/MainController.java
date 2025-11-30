@@ -3,7 +3,10 @@ package org.cheepskies.ui;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -11,6 +14,8 @@ import org.cheepskies.common.ValueObject;
 import org.cheepskiesdb.DatabaseConnector;
 
 import javafx.scene.input.MouseEvent;
+
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -26,7 +31,7 @@ public class MainController implements Initializable {
     private Button remove;
 
     @FXML
-    private Button searchButton;
+    private Button toAdminPageButton;
 
     @FXML
     private TextField flightId;
@@ -432,9 +437,21 @@ public class MainController implements Initializable {
 
     }
     @FXML
-    void goToSearchPage(MouseEvent event) {
+    void goToAdminPageClick(MouseEvent event) {
+        try {
+            // Load the new FXML file
+            Parent newPage = FXMLLoader.load(getClass().getResource("/org/gui/cheepskies/search-page.fxml"));
 
+            // Get the current stage
+            Stage stage = (Stage) toAdminPageButton.getScene().getWindow();
+
+            // Set the new scene
+            Scene scene = new Scene(newPage);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
 
 }
