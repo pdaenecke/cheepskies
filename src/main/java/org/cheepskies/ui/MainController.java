@@ -20,6 +20,7 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 
@@ -184,10 +185,6 @@ public class MainController implements Initializable {
 
     @FXML
     private TableColumn<Flight, String> arrivalTimeF;
-
-
-    @FXML
-    private TableColumn<Flight, String> arrivalDateF;
 
 
     @FXML
@@ -475,6 +472,7 @@ public class MainController implements Initializable {
                 }
 
 
+
                 DatabaseConnector db = new DatabaseConnector();
 
                 // Execute the query with parameters
@@ -509,39 +507,42 @@ public class MainController implements Initializable {
     void searchFlights2(MouseEvent event) {
         try {
             // Get user input from text fields
-            String flightId = flightIdTextBox.getText().trim();
-            String departLoc = departLocTextBox.getText().trim();
-            String arrivalLoc = arrivalLocationTextBox.getText().trim();
-            String departDate = departureDateTextBox.getText().trim();
-            String flightDur = flightDurTextBox.getText().trim();
-            String priceStr = priceTextBox.getText().trim();
+            String flightId = flightIdTextBox1.getText().trim();
+            String departLoc = departLocTextBox1.getText().trim();
+            String arrivalLoc = arrivalLocationTextBox1.getText().trim();
+            String departDate = departureDateTextBox1.getText().trim();
+            String flightDur = flightDurTextBox1.getText().trim();
+            String priceStr = priceTextBox1.getText().trim();
 
-            // Build the SQL query dynamically with placeholders
-            StringBuilder query = new StringBuilder("SELECT * FROM flight_customer WHERE 1=1");
+            // Building the SQL query dynamically with placeholders
+            StringBuilder query = new StringBuilder("SELECT f.* FROM flights f " +
+                    "JOIN flight_customer fc ON f.flightid = fc.flightid " +
+                    "WHERE fc.customer_id = " + currentUserId);
+
             List<String> parameters = new ArrayList<>();
-// is this the same as equals I have already overridden
+// is this the same as equals I have already overridden???
             if (!flightId.isEmpty()) {
-                query.append(" AND flightId = ?");
+                query.append(" AND f.flightid = ?");
                 parameters.add(flightId);
             }
             if (!departLoc.isEmpty()) {
-                query.append(" AND departureLocation = ?");
+                query.append(" AND f.departurelocation = ?");
                 parameters.add(departLoc);
             }
             if (!arrivalLoc.isEmpty()) {
-                query.append(" AND arrivalLocation = ?");
+                query.append(" AND f.arrivallocation = ?");
                 parameters.add(arrivalLoc);
             }
             if (!departDate.isEmpty()) {
-                query.append(" AND departureDate = ?");
+                query.append(" AND f.departuredate = ?");
                 parameters.add(departDate);
             }
             if (!flightDur.isEmpty()) {
-                query.append(" AND flightDuration = ?");
+                query.append(" AND f.flightduration = ?");
                 parameters.add(flightDur);
             }
             if (!priceStr.isEmpty()) {
-                query.append(" AND price = ?");
+                query.append(" AND f.price = ?");
                 parameters.add(priceStr);
             }
 
@@ -557,30 +558,31 @@ public class MainController implements Initializable {
             // Loop through results and create Flight objects
             while (rs.next()) {
                 Flight flight = new Flight(
-                        rs.getString("arrivalLocation"),
-                        rs.getString("departureLocation"),
-                        rs.getInt("flightId"),
-                        rs.getDouble("price"),
-                        rs.getString("departureDate"),
-                        rs.getString("flightDuration")
+                        rs.getString("departurelocation"),
+                        rs.getString("departuretime"),
+                        rs.getString("arrivallocation"),
+                        rs.getString("arrivaltime"),
+                        rs.getString("flightduration"),
+                        rs.getString("departuredate"),
+                        rs.getDouble("price")
                 );
+                flight.setFlightId(rs.getInt("flightid"));
                 flightList.add(flight);
+
             }
 
             // Display results in the table
             flightsTableF.setItems(flightList);
 
         } catch (Exception e) {
-            e.printStackTrace();
-            // Consider showing an error alert to the user
+           e.printStackTrace();
         }
     }
     @FXML
     void goToAdminPageClick(MouseEvent event) {
         try {
             // Load the new FXML file
-            Parent newPage = FXMLLoader.load(getClass().getResource("/org/gui/cheepskies/search-page.fxml"));
-
+            Parent newPage = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/gui/cheepskies/search-page.fxml")));
             // Get the current stage
             Stage stage = (Stage) toAdminPageButton.getScene().getWindow();
 

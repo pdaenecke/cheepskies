@@ -114,7 +114,7 @@ public class RegistrationController {
             //inject SQL statement to pull login cred
             //try ()
 
-            registrationStatus.setText("Registration complete.");
+            registrationStatus.setText("Registration complete. Press x to login.");
             System.out.print("Registration complete.");
 
         } catch (SQLException e) {
