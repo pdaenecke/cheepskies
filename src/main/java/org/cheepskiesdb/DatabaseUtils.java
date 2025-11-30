@@ -10,17 +10,23 @@ import java.sql.SQLException;
 
 public class DatabaseUtils {
 
-
+    /*
+    -takes in customerId and flightId as parameters
+    -remove flight from customer via flight_customer table
+    -boolean return type so it can be set to a ValueObject operationResult
+     */
     public static boolean removeFlightFromCustomer(int customerId, int flightId) {
         String deleteQuery = "DELETE FROM flight_customer WHERE flightid = ? AND customer_id = ?";
 
+        //establish db connection
         try (Connection conn = DatabaseConnector.dbConnect();
              PreparedStatement statement = conn.prepareStatement(deleteQuery)) {
 
+            //prepared statement values for ?'s
             statement.setInt(1, flightId);
             statement.setInt(2, customerId);
 
-            int rowsAffected = statement.executeUpdate();
+            int rowsAffected = statement.executeUpdate(); //rowsAffected = number of updated prepared statements
             return rowsAffected > 0;
 
         } catch (SQLException e) {
@@ -30,22 +36,24 @@ public class DatabaseUtils {
     }
 
     /*
-    -Takes in ValueObject as a parameter with interchangeable flight information
-    -Returns operationResult as true IF the operation is successful
-    -Throws AddToFlightListException and FlightScheduling Exception
+    -takes in customerId and flightId as parameters
+    -adds flight to customer via flight_customer table
+    -boolean return type so it can be set to a ValueObject operationResult
      */
     public static boolean addFlightToCustomer(int customerId, int flightId) {
         String insertQuery = "INSERT INTO flight_customer (flightid, customer_id, capacity, is_max_capacity) VALUES (?, ?, ?, ?)";
 
+        //establish db connection
         try (Connection conn = DatabaseConnector.dbConnect();
              PreparedStatement statement = conn.prepareStatement(insertQuery)) {
 
+            //prepared statement values for ?'s
             statement.setInt(1, flightId);
             statement.setInt(2, customerId);
             statement.setInt(3, 1);
             statement.setBoolean(4, false);
 
-            int rowsAffected = statement.executeUpdate();
+            int rowsAffected = statement.executeUpdate(); //rowsAffected = number of updated prepared statements
             return rowsAffected > 0;
 
         } catch (SQLException e) {
@@ -174,15 +182,22 @@ public class DatabaseUtils {
         }
     }
 
-    //comments needed
+    /*
+        -checks if the set flight has capacity
+        -takes in flightId as a parameter
+        -boolean return type so it can be set as boolean operationResult within a ValueObject
+     */
     public static boolean flightHasCapacity(int flightId) {
         String query = "SELECT capacity, is_max_capacity FROM flight_customer WHERE flightid = ?";
 
+        //establish connection
         try (Connection conn = DatabaseConnector.dbConnect();
              PreparedStatement statement = conn.prepareStatement(query)) {
 
+            //prepared statement setting
             statement.setInt(1, flightId);
             ResultSet rs = statement.executeQuery();
+
 
             if (rs.next()) {
                 int capacity = rs.getInt("capacity");
@@ -201,16 +216,23 @@ public class DatabaseUtils {
         return false;
     }
 
-    //comments needed
+    /*
+        -checks that customer has flight
+        -takes in flightId and customerId as a parameter
+        -boolean return type so it can be set as boolean operationResult within a ValueObject
+     */
     public static boolean customerHasFlight(int customerId, int flightId) {
         String query = "SELECT COUNT(*) FROM flight_customer WHERE customer_id = ? AND flightid = ?";
 
+        //establish db connection and prepared statement
         try (Connection conn = DatabaseConnector.dbConnect();
              PreparedStatement statement = conn.prepareStatement(query)) {
 
+            //prepared statement parameter setting
             statement.setInt(1, customerId);
             statement.setInt(2, flightId);
             ResultSet rs = statement.executeQuery();
+
 
             if (rs.next()) {
                 return rs.getInt(1) > 0;

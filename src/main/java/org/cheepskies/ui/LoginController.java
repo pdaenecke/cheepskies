@@ -16,7 +16,7 @@ import org.cheepskiesdb.DatabaseUtils;
 import org.cheepskies.ui.Customer;
 
 public class LoginController {
-
+//fix to one customer obj
     @FXML
     private Button login;
 

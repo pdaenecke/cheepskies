@@ -28,7 +28,7 @@ public class BizLogic {
         return true;
     }
 
-    //comments needed
+    //Adds flights to userFlights through DatabaseUtils
     public boolean addFlightToCustomer(ValueObject vo) throws AddFlightRecordDuplicationException, AddToFlightListException {
         Flight flight = vo.getFlight();
         Customer customer = vo.getCustomer();
@@ -46,6 +46,7 @@ public class BizLogic {
         // Add flight to customer and update capacity
         boolean success = DatabaseUtils.addFlightToCustomer(customer.getCustomerId(), flight.getFlightId());
 
+        //if addFlightToCustomer not true, throw exception
         if (!success) {
             throw new AddToFlightListException("Failed to add flight to customer.");
         }
@@ -53,7 +54,7 @@ public class BizLogic {
         return true;
     }
 
-    //comments needed
+    //Removes flight from customer through DatabaseUtils
     public boolean removeFlightFromCustomer(ValueObject vo) throws RemoveFlightRecordException {
         Flight flight = vo.getFlight();
         Customer customer = vo.getCustomer();
@@ -61,6 +62,7 @@ public class BizLogic {
         // Remove flight from customer and update capacity
         boolean success = DatabaseUtils.removeFlightFromCustomer(customer.getCustomerId(), flight.getFlightId());
 
+        //if removeFlightFromCustomer not true throw exception
         if (!success) {
             throw new RemoveFlightRecordException("Failed to remove flight from customer.");
         }

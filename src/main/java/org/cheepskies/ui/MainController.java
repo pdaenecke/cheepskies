@@ -3,19 +3,23 @@ package org.cheepskies.ui;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import org.cheepskies.common.ValueObject;
 import org.cheepskiesdb.DatabaseConnector;
 
 import javafx.scene.input.MouseEvent;
+
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
+
 
 //Darrel
 public class MainController implements Initializable {
@@ -27,7 +31,7 @@ public class MainController implements Initializable {
     private Button remove;
 
     @FXML
-    private Button search;
+    private Button toAdminPageButton;
 
     @FXML
     private TextField flightId;
@@ -73,6 +77,80 @@ public class MainController implements Initializable {
 
     @FXML
     private TextField arrivalLocation;
+    @FXML
+    private TextField arrivalLocationTextBox;
+
+    @FXML
+    private TextField arrivalLocationTextBox1;
+    @FXML
+    private Label arriveLocationLabel;
+
+    @FXML
+    private Label arriveLocationLabel1;
+
+    @FXML
+    private Label departDateLabel;
+
+    @FXML
+    private Label departDateLabel1;
+
+    @FXML
+    private TextField departLocTextBox;
+
+    @FXML
+    private TextField departLocTextBox1;
+    @FXML
+    private TextField departureDateTextBox;
+
+    @FXML
+    private TextField departureDateTextBox1;
+
+    @FXML
+    private Label departureLocLabel;
+
+    @FXML
+    private Label departureLocLabel1;
+    @FXML
+    private Label flightDurLabel;
+
+    @FXML
+    private Label flightDurLabel1;
+
+    @FXML
+    private TextField flightDurTextBox;
+
+    @FXML
+    private TextField flightDurTextBox1;
+    @FXML
+    private Label flightIdLabel;
+
+    @FXML
+    private Label flightIdLabel1;
+    @FXML
+    private TextField flightIdTextBox;
+
+    @FXML
+    private TextField flightIdTextBox1;
+    @FXML
+    private Label priceLabel;
+
+    @FXML
+    private Label priceLabel1;
+    @FXML
+    private TextField priceTextBox;
+
+    @FXML
+    private TextField priceTextBox1;
+    @FXML
+    private Label searchALLFLabel;
+    @FXML
+    private Button searchButton1;
+
+    @FXML
+    private Button searchButton2;
+
+    @FXML
+    private Label searchCustFLabel;
 
     @FXML
     private TableColumn<Flight, String> arrivalLocationT;
@@ -267,9 +345,9 @@ public class MainController implements Initializable {
 
 
     @FXML
-    //comments needed
+    //adds flights to flightsTableF when add button is pressed
     public void addFlight(MouseEvent event) {
-        Flight selectedFlight = flightsTable.getSelectionModel().getSelectedItem();
+        Flight selectedFlight = flightsTable.getSelectionModel().getSelectedItem(); //whatever flight is selected
 
         if (selectedFlight == null) {
             System.out.println("No flight selected to add.");
@@ -277,7 +355,7 @@ public class MainController implements Initializable {
         }
 
         ValueObject vo = new ValueObject();
-        vo.setAction("addFlight");
+        vo.setAction("addFlight"); //switch case from facade
         vo.setFlight(selectedFlight);
 
         Customer customer = new Customer();
@@ -285,11 +363,12 @@ public class MainController implements Initializable {
         vo.setCustomer(customer);
 
         try {
-            Facade.process(vo);
+            Facade.process(vo);//facade process is run with set flight and customer
 
+            /* boolean operation result of bizlogic.addFlightToCustomer */
             if (vo.operationResult) {
                 userFlights.add(selectedFlight);
-                System.out.println("Flight " + selectedFlight.getFlightId() + " added successfully.");
+                System.err.println("Flight " + selectedFlight.getFlightId() + " added successfully.");
             } else {
                 System.err.println("Failed to add flight.");
             }
@@ -301,9 +380,9 @@ public class MainController implements Initializable {
 
 
     @FXML
-    //comments needed
+    //removes flights from flightsTableF when remove button is pressed
     public void removeFlight(MouseEvent event) {
-        Flight selectedFlight = flightsTableF.getSelectionModel().getSelectedItem();
+        Flight selectedFlight = flightsTableF.getSelectionModel().getSelectedItem(); //whatever flight is selected
 
         if (selectedFlight == null) {
             System.out.println("No flight selected to remove.");
@@ -311,7 +390,7 @@ public class MainController implements Initializable {
         }
 
         ValueObject vo = new ValueObject();
-        vo.setAction("removeFlight");
+        vo.setAction("removeFlight"); //switch case from facade
         vo.setFlight(selectedFlight);
 
         Customer customer = new Customer();
@@ -319,10 +398,11 @@ public class MainController implements Initializable {
         vo.setCustomer(customer);
 
         try {
-            Facade.process(vo);
+            Facade.process(vo); //facade process is run with set flight and customer
 
+            //boolean operationResult of BizLogic.removeFlightFromCustomer
             if (vo.operationResult) {
-                userFlights.remove(selectedFlight);
+                userFlights.remove(selectedFlight); //removes flight from observablelist
                 System.out.println("Flight " + selectedFlight.getFlightId() + " removed successfully.");
             } else {
                 System.err.println("Failed to remove flight.");
@@ -333,5 +413,45 @@ public class MainController implements Initializable {
         }
     }
 
+    @FXML
+    public void logout(MouseEvent event) {
+        try {
+            // Open login page
+            LoginApplication loginApp = new LoginApplication();
+            Stage loginStage = new Stage();
+            loginApp.start(loginStage);
+
+            // Close current main page
+            Stage currentStage = (Stage) logout.getScene().getWindow();
+            currentStage.close();
+
+            System.out.println("User logged out successfully.");
+
+        } catch (Exception e) {
+            System.err.println("Error during logout: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void searchFlights(MouseEvent event) {
+
+    }
+    @FXML
+    void goToAdminPageClick(MouseEvent event) {
+        try {
+            // Load the new FXML file
+            Parent newPage = FXMLLoader.load(getClass().getResource("/org/gui/cheepskies/search-page.fxml"));
+
+            // Get the current stage
+            Stage stage = (Stage) toAdminPageButton.getScene().getWindow();
+
+            // Set the new scene
+            Scene scene = new Scene(newPage);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

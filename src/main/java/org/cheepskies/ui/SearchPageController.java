@@ -105,7 +105,7 @@ public class SearchPageController implements Initializable {
             // Build the SQL query dynamically with placeholders
             StringBuilder query = new StringBuilder("SELECT * FROM flights WHERE 1=1");
             List<String> parameters = new ArrayList<>();
-
+// is this the same as equals I have already overridden
             if (!flightId.isEmpty()) {
                 query.append(" AND flightId = ?");
                 parameters.add(flightId);
