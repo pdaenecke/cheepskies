@@ -42,10 +42,10 @@ public class LoginController {
         vo.getCustomer().credentials(user, pass);
         vo.setAction("login");
 
+        Customer c = vo.getCustomer();
+
         try {
             Facade.process(vo);
-
-            Customer c = vo.getCustomer();
 
             System.out.println("=== Customer Info ===");
             System.out.println("Customer ID: " + c.getCustomerId());
@@ -60,8 +60,6 @@ public class LoginController {
         } catch (Exception e) {
             System.out.println(e);
         }
-
-        Customer c = vo.getCustomer();
 
         if (vo.operationResult) {
             loginStatus.setText("Login success.");
