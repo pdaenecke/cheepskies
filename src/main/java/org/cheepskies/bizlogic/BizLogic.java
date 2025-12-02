@@ -6,6 +6,10 @@ import org.cheepskies.ui.Flight;
 import org.cheepskiesdb.DatabaseUtils;
 import org.cheepskiesexceptions.*;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class BizLogic {
 
     public boolean login(ValueObject vo) throws Exception {
@@ -69,9 +73,10 @@ public class BizLogic {
 
         return true;
     }
-
-//    public boolean searchFlightsAsCustomer(ValueObject vo) {
+    //do i even need this??
+//    public boolean searchFlightsAsCustomer(ValueObject vo) throws SQLException {
 //
 //
 //    }
+
 }

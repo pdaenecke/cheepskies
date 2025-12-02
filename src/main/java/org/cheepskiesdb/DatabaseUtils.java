@@ -242,5 +242,4 @@ public class DatabaseUtils {
             System.out.println("Error checking if customer has flight: " + e.getMessage());
         }
         return false;
-    }
-}
+    }}

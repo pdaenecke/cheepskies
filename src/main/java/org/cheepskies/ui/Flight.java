@@ -124,31 +124,31 @@ public class Flight {
         this.departureDate = departureDate;
         this.flightDuration = flightDuration;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Flight flight = (Flight) obj;
-
-        if(flight.flightId != 0 && flightId != flight.flightId) {
-            return false;
-        }
-        if(!flight.departureLocation.isEmpty() && !departureLocation.equals(flight.departureLocation)) {
-            return false;
-        }
-        if(!flight.arrivalLocation.isEmpty() && !arrivalLocation.equals(flight.arrivalLocation)) {
-            return false;
-        }
-        if(!flight.flightDuration.isEmpty() && !flightDuration.equals(flight.flightDuration)) {
-            return false;
-        }
-        if(!flight.departureDate.isEmpty() && !departureDate.equals(flight.departureDate)) {
-            return false;
-        }
-        if(price != 0 && price != this.price) {
-            return false;
-        }
-        return true;
-    }
+//instead of override equals, may use WHERE clause dynamically based on the search criteria
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (this == obj) return true;
+//        if (obj == null || getClass() != obj.getClass()) return false;
+//        Flight flight = (Flight) obj;
+//
+//        if(flight.flightId != 0 && flightId != flight.flightId) {
+//            return false;
+//        }
+//        if(!flight.departureLocation.isEmpty() && !departureLocation.equals(flight.departureLocation)) {
+//            return false;
+//        }
+//        if(!flight.arrivalLocation.isEmpty() && !arrivalLocation.equals(flight.arrivalLocation)) {
+//            return false;
+//        }
+//        if(!flight.flightDuration.isEmpty() && !flightDuration.equals(flight.flightDuration)) {
+//            return false;
+//        }
+//        if(!flight.departureDate.isEmpty() && !departureDate.equals(flight.departureDate)) {
+//            return false;
+//        }
+//        if(this.price != 0 && this.price != flight.price) {
+//            return false;
+//        }
+//        return true;
+//    }
 }

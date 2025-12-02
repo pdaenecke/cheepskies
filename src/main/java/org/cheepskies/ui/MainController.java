@@ -430,7 +430,7 @@ public class MainController implements Initializable {
             System.err.println("Error during logout: " + e.getMessage());
         }
     }
-
+//first table search button on main menu
     @FXML
     void searchFlights1(MouseEvent event) {
             try {
@@ -445,7 +445,18 @@ public class MainController implements Initializable {
                 // Build the SQL query dynamically with placeholders
                 StringBuilder query = new StringBuilder("SELECT * FROM flights WHERE 1=1");
                 List<String> parameters = new ArrayList<>();
-// is this the same as equals I have already overridden
+
+                //idk how to use Vo and equals and facade
+                ValueObject vo = new ValueObject();
+                vo.setAction("searchFlightCustomer"); //switch case from facade
+
+                Customer customer = new Customer();
+                customer.setCustomerId(currentUserId);
+                vo.setCustomer(customer);
+                // guessing and should prob delete above 5 lines
+
+
+// is this the same as equals I have already overridden in Customer class?
                 if (!flightId.isEmpty()) {
                     query.append(" AND flightId = ?");
                     parameters.add(flightId);
@@ -502,7 +513,7 @@ public class MainController implements Initializable {
                 // Consider showing an error alert to the user
             }
         }
-
+//second table search button on main menu
     @FXML
     void searchFlights2(MouseEvent event) {
         try {
@@ -520,6 +531,8 @@ public class MainController implements Initializable {
                     "WHERE fc.customer_id = " + currentUserId);
 
             List<String> parameters = new ArrayList<>();
+
+//            Flight flight = new Flight(arrivalLoc, departLoc, flightId, priceStr, departDate, flightDur); ???
 // is this the same as equals I have already overridden???
             if (!flightId.isEmpty()) {
                 query.append(" AND f.flightid = ?");
@@ -581,12 +594,12 @@ public class MainController implements Initializable {
     @FXML
     void goToAdminPageClick(MouseEvent event) {
         try {
-            // Load the new FXML file
-            Parent newPage = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/gui/cheepskies/search-page.fxml")));
-            // Get the current stage
+            // Loading the new FXML file
+            Parent newPage = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/gui/cheepskies/admin-page.fxml")));
+            // Getting the current stage
             Stage stage = (Stage) toAdminPageButton.getScene().getWindow();
 
-            // Set the new scene
+            // Setting the new scene
             Scene scene = new Scene(newPage);
             stage.setScene(scene);
             stage.show();

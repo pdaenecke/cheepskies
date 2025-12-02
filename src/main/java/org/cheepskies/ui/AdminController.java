@@ -8,16 +8,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import org.cheepskies.common.ValueObject;
-import org.cheepskiesdb.DatabaseConnector;
 
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
-public class SearchPageController implements Initializable {
+public class AdminController implements Initializable {
 
     @FXML
     private TextField arrivalLocationTextBox;

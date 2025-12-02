@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="570.0" prefWidth="618.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cheepskies.ui.SearchPageController">
+<AnchorPane prefHeight="570.0" prefWidth="618.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cheepskies.ui.AdminController">
    <children>
       <Button fx:id="searchButton" layoutX="473.0" layoutY="125.0" mnemonicParsing="false" onMouseClicked="#searchFlights" prefHeight="26.0" prefWidth="131.0" text="Search" />
       <Label fx:id="flightIdLabel" layoutX="200.0" layoutY="24.0" prefHeight="17.0" prefWidth="47.0" text="FlightID:" />
