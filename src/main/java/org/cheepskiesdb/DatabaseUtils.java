@@ -242,4 +242,31 @@ public class DatabaseUtils {
             System.out.println("Error checking if customer has flight: " + e.getMessage());
         }
         return false;
-    }}
+    }
+    //checks if admin is adding duplicate flight, flights can have same exact everything EXCEPT flightid (meaning, 2 flights going to same place)
+    public static boolean flightAlreadyExists(int flightId) {
+
+        String query = "SELECT * FROM flight WHERE flightid = ?";
+
+        //establish db connection and prepared statement
+        try (Connection conn = DatabaseConnector.dbConnect();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+
+            //prepared statement parameter setting
+            statement.setInt(1, flightId);
+            ResultSet rs = statement.executeQuery();
+
+
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error checking if flight exists: " + e.getMessage());
+        }
+        return false;
+
+    }
+
+
+}

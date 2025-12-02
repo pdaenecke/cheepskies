@@ -79,4 +79,15 @@ public class BizLogic {
 //
 //    }
 
+    public boolean adminAddFlight(ValueObject vo) throws AddNewFlightException {
+        Flight flight = vo.getFlight();
+
+        if (DatabaseUtils.flightAlreadyExists(flight.getFlightId())) {
+            throw new AddNewFlightException("Flight already exists.");
+        }
+        else {
+            return true;
+        }
+    }
+
 }

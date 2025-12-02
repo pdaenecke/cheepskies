@@ -591,6 +591,8 @@ public class MainController implements Initializable {
            e.printStackTrace();
         }
     }
+
+    //MUST ONLY BE EITHER VISIBLE AND ACCESSIBLE BY ADMIN
     @FXML
     void goToAdminPageClick(MouseEvent event) {
         try {

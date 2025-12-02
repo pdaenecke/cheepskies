@@ -24,9 +24,9 @@ public class Facade {
                     break;
                 case "register":
                 //missing logic
-                case "searchFlightCustomer":
-                    vo.operationResult = bizlogic.searchFlightsAsCustomer(vo);
-                    break;
+//                case "searchFlightCustomer":
+//                    vo.operationResult = bizlogic.searchFlightsAsCustomer(vo);
+//                    break;
             }
             // catch block contains the exceptions for our bizlogic functions
         } catch (LoginException e) {
@@ -47,7 +47,10 @@ public class Facade {
         } catch (FlightSchedulingException e) {
             vo.operationResult = false;
             System.out.println("Flight scheduling error: " + e.getMessage());
-        } catch (Exception e) {
+        }catch (AddNewFlightException e) {
+            vo.operationResult = false;
+            System.out.println("(Admin) Add new flight error: " + e.getMessage());
+        }catch (Exception e) {
             vo.operationResult = false;
             System.out.println("Unexpected error: " + e.getMessage());
         }
