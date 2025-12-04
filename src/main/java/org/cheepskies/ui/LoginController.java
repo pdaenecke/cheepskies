@@ -4,12 +4,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
 import javafx.stage.Stage;
 import org.cheepskies.common.ValueObject;
+
 
 public class LoginController {
 //fix to one customer obj
@@ -27,6 +29,9 @@ public class LoginController {
 
     @FXML
     private Label loginStatus;
+
+    @FXML
+    private ImageView imageBird;
 
     @FXML
     void loginAttempt(MouseEvent event) {
