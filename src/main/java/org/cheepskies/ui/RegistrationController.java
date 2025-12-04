@@ -40,16 +40,21 @@ public class RegistrationController {
     private TextField username;
 
     @FXML
+    private TextField security;
+
+    @FXML
     void accountCreation(MouseEvent event) {
+
         String first = firstName.getText();
         String last = lastName.getText();
         String middle = middleInitial.getText();
         String user = username.getText();
         String pass = password.getText();
         String mail = email.getText();
+        String secure = security.getText();
 
         // checks if any fields are empty
-        if (first.isEmpty() || last.isEmpty() || middle.isEmpty() || user.isEmpty() || pass.isEmpty() || mail.isEmpty()) {
+        if (first.isEmpty() || last.isEmpty() || middle.isEmpty() || user.isEmpty() || pass.isEmpty() || mail.isEmpty() || secure.isEmpty()) {
             registrationStatus.setText("One or more fields are empty.");
             return;
         }

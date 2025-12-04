@@ -6,6 +6,7 @@ public class Customer extends User {
     private String username;
     private String password;
     private String credentialId;
+    private String answer;
 
     // Credential table get/set
     public String getUsername() { return username; }
@@ -14,8 +15,11 @@ public class Customer extends User {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
+    public String getAnswer() { return answer; }
+    public void setAnswer(String answer) { this.answer = answer; }
+
     // Credential table constructor
-    public void credentials(String username, String password) {
+    public void credentials(String username, String password, String answer) {
         this.username = username;
         this.password = password;
     }
