@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#refreshTables" prefHeight="725.0" prefWidth="1004.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cheepskies.ui.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#refreshTables" prefHeight="708.0" prefWidth="1003.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cheepskies.ui.MainController">
    <children>
-      <TableView fx:id="flightsTableF" layoutX="369.0" layoutY="450.0" prefHeight="200.0" prefWidth="623.0">
+      <TableView fx:id="flightsTableF" layoutX="369.0" layoutY="441.0" prefHeight="200.0" prefWidth="623.0">
         <columns>
           <TableColumn fx:id="flightIdF" prefWidth="89.0" text="Flight ID" />
             <TableColumn fx:id="arrivalLocationF" prefWidth="89.0" text="Arrive At" />
@@ -22,7 +22,7 @@
             <TableColumn fx:id="priceF" prefWidth="89.0" text="Price" />
         </columns>
       </TableView>
-      <TableView fx:id="flightsTable" layoutX="369.0" layoutY="83.0" prefHeight="200.0" prefWidth="623.0">
+      <TableView fx:id="flightsTable" layoutX="369.0" layoutY="84.0" prefHeight="200.0" prefWidth="623.0">
         <columns>
           <TableColumn fx:id="flightIdT" prefWidth="89.0" text="Flight ID" />
             <TableColumn fx:id="arrivalLocationT" prefWidth="89.0" text="Arrive At" />
@@ -33,12 +33,12 @@
             <TableColumn fx:id="priceT" prefWidth="89.0" text="Price" />
         </columns>
       </TableView>
-      <Button fx:id="add" layoutX="372.0" layoutY="302.0" mnemonicParsing="false" onMouseClicked="#addFlight" text="Add Flight" />
-      <Button fx:id="remove" layoutX="371.0" layoutY="662.0" mnemonicParsing="false" onMouseClicked="#removeFlight" text="Remove Flight" />
-      <Button fx:id="toAdminPageButton" layoutX="874.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#goToAdminPageClick" text="Admin Flights Page" />
-      <Button fx:id="logout" layoutX="14.0" layoutY="686.0" mnemonicParsing="false" onMouseClicked="#logout" text="Logout" />
-      <Button fx:id="refresh" layoutX="928.0" layoutY="665.0" mnemonicParsing="false" onMouseClicked="#refreshTables" text="Refresh" />
-      <Button fx:id="searchButton1" layoutX="159.0" layoutY="302.0" mnemonicParsing="false" onMouseClicked="#searchFlights1" prefHeight="26.0" prefWidth="131.0" text="Search" />
+      <Button fx:id="add" layoutX="369.0" layoutY="295.0" mnemonicParsing="false" onMouseClicked="#addFlight" text="Add Flight" />
+      <Button fx:id="remove" layoutX="369.0" layoutY="652.0" mnemonicParsing="false" onMouseClicked="#removeFlight" text="Remove Flight" />
+      <Button fx:id="toAdminPageButton" layoutX="794.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#goToAdminPageClick" text="Admin Flights Page" />
+      <Button fx:id="logout" layoutX="931.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#logout" prefWidth="61.0" text="Logout" />
+      <Button fx:id="refresh" layoutX="931.0" layoutY="652.0" mnemonicParsing="false" onMouseClicked="#refreshTables" text="Refresh" />
+      <Button fx:id="searchButton1" layoutX="161.0" layoutY="295.0" mnemonicParsing="false" onMouseClicked="#searchFlights1" prefHeight="26.0" prefWidth="131.0" text="Search" />
       <Label fx:id="flightIdLabel" layoutX="89.0" layoutY="64.0" prefHeight="17.0" prefWidth="47.0" text="FlightID:" />
       <Label fx:id="departureLocLabel" layoutX="24.0" layoutY="103.0" prefHeight="17.0" prefWidth="110.0" text="Departure Location:" />
       <Label fx:id="arriveLocationLabel" layoutX="42.0" layoutY="144.0" prefHeight="17.0" prefWidth="91.0" text="Arrival Location:" />
@@ -51,29 +51,39 @@
       <TextField fx:id="departureDateTextBox" layoutX="144.0" layoutY="217.0" />
       <Label fx:id="priceLabel" layoutX="100.0" layoutY="260.0" prefHeight="17.0" prefWidth="34.0" text="Price:" />
       <TextField fx:id="priceTextBox" layoutX="144.0" layoutY="256.0" />
-      <Label fx:id="searchALLFLabel" layoutX="17.0" layoutY="12.0" text="Search All Flights">
+      <Label fx:id="searchALLFLabel" layoutX="33.0" layoutY="14.0" prefHeight="29.0" prefWidth="272.0" text="Search All Available Flights" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label fx:id="searchCustFLabel" layoutX="17.0" layoutY="373.0" text="Search Your Flights">
+      <Label fx:id="searchCustFLabel" layoutX="109.0" layoutY="371.0" text="Search Your Flights" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="searchButton2" layoutX="161.0" layoutY="662.0" mnemonicParsing="false" onMouseClicked="#searchFlights2" prefHeight="26.0" prefWidth="131.0" text="Search" />
-      <Label fx:id="flightIdLabel1" layoutX="89.0" layoutY="424.0" prefHeight="17.0" prefWidth="47.0" text="FlightID:" />
-      <Label fx:id="departureLocLabel1" layoutX="24.0" layoutY="463.0" prefHeight="17.0" prefWidth="110.0" text="Departure Location:" />
-      <Label fx:id="arriveLocationLabel1" layoutX="42.0" layoutY="504.0" prefHeight="17.0" prefWidth="91.0" text="Arrival Location:" />
-      <Label fx:id="flightDurLabel1" layoutX="49.0" layoutY="543.0" prefHeight="17.0" prefWidth="85.0" text="Flight Duration:" />
-      <Label fx:id="departDateLabel1" layoutX="50.0" layoutY="582.0" prefHeight="17.0" prefWidth="85.0" text="Depature Date:" />
-      <TextField fx:id="flightIdTextBox1" layoutX="144.0" layoutY="419.0" />
-      <TextField fx:id="departLocTextBox1" layoutX="144.0" layoutY="459.0" />
-      <TextField fx:id="arrivalLocationTextBox1" layoutX="144.0" layoutY="499.0" />
-      <TextField fx:id="flightDurTextBox1" layoutX="144.0" layoutY="538.0" />
-      <TextField fx:id="departureDateTextBox1" layoutX="144.0" layoutY="577.0" />
-      <Label fx:id="priceLabel1" layoutX="100.0" layoutY="620.0" prefHeight="17.0" prefWidth="34.0" text="Price:" />
-      <TextField fx:id="priceTextBox1" layoutX="144.0" layoutY="616.0" />
+      <Button fx:id="searchButton2" layoutX="161.0" layoutY="652.0" mnemonicParsing="false" onMouseClicked="#searchFlights2" prefHeight="26.0" prefWidth="131.0" text="Search" />
+      <Label fx:id="flightIdLabel1" layoutX="89.0" layoutY="421.0" prefHeight="17.0" prefWidth="47.0" text="FlightID:" />
+      <Label fx:id="departureLocLabel1" layoutX="24.0" layoutY="460.0" prefHeight="17.0" prefWidth="110.0" text="Departure Location:" />
+      <Label fx:id="arriveLocationLabel1" layoutX="42.0" layoutY="501.0" prefHeight="17.0" prefWidth="91.0" text="Arrival Location:" />
+      <Label fx:id="flightDurLabel1" layoutX="49.0" layoutY="540.0" prefHeight="17.0" prefWidth="85.0" text="Flight Duration:" />
+      <Label fx:id="departDateLabel1" layoutX="50.0" layoutY="579.0" prefHeight="17.0" prefWidth="85.0" text="Depature Date:" />
+      <TextField fx:id="flightIdTextBox1" layoutX="144.0" layoutY="416.0" />
+      <TextField fx:id="departLocTextBox1" layoutX="144.0" layoutY="456.0" />
+      <TextField fx:id="arrivalLocationTextBox1" layoutX="144.0" layoutY="496.0" />
+      <TextField fx:id="flightDurTextBox1" layoutX="144.0" layoutY="535.0" />
+      <TextField fx:id="departureDateTextBox1" layoutX="144.0" layoutY="574.0" />
+      <Label fx:id="priceLabel1" layoutX="100.0" layoutY="617.0" prefHeight="17.0" prefWidth="34.0" text="Price:" />
+      <TextField fx:id="priceTextBox1" layoutX="144.0" layoutY="613.0" />
       <Separator layoutX="12.0" layoutY="351.0" prefHeight="14.0" prefWidth="985.0" />
+      <Label fx:id="planeEmoji2" layoutX="322.0" layoutY="371.0" rotate="-90.0" text="✈">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="planeEmoji1" layoutX="322.0" layoutY="13.0" rotate="-90.0" text="✈">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

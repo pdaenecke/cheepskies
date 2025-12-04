@@ -26,7 +26,11 @@ import java.util.ResourceBundle;
 import static org.cheepskiesdb.DatabaseConnector.dbConnect;
 
 public class MainController implements Initializable {
+    @FXML
+    private Label planeEmoji1;
 
+    @FXML
+    private Label planeEmoji2;
     @FXML
     private Button add;
 
