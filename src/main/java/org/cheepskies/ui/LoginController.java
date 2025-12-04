@@ -70,6 +70,7 @@ public class LoginController {
         try {
             MainController mainController = MainApplication.openMain();
             mainController.setCurrentUser(customerId);
+
             ((Stage) login.getScene().getWindow()).close();
         } catch (IOException e) {
             loginStatus.setText("Error opening main page.");

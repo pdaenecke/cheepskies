@@ -207,6 +207,9 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         System.out.println("MainController initialize started..."); //debugging stuff
+        //set admin page button to not show / take up space by default, will be set to true by later admin verification
+        toAdminPageButton.setVisible(false);
+        toAdminPageButton.setManaged(false);
 
         try { //Calls the getter for each of these properties
             flightIdT.setCellValueFactory(new PropertyValueFactory<>("flightId"));
@@ -239,13 +242,51 @@ public class MainController implements Initializable {
             System.out.println("Error during MainController initialization: " + e.getMessage()); //debugging stuff
         }
     }
+//used to check if user is admin
+    public void adminCheck(int custId) {
+        //preparing query for prepared statement
+        String query = "SELECT admin FROM customers WHERE customer_id = ?";
+        //assigning current customer logged in to value object, also getting custID for verification of admin in prepared statement
+        ValueObject vo = new ValueObject();
+        Customer cust = new Customer();
+        vo.setCustomer(cust);
+        Facade.process(vo);
 
+        try (Connection connection = dbConnect();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1,custId);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                if (rs.getInt("admin" ) == 1) {
+                    System.out.println("Admin found with custId: " + custId);
+                    toAdminPageButton.setVisible(true);
+                    toAdminPageButton.setManaged(true);
+                }
+                else {
+                    System.out.println("Customer with custId: " + custId + " is not admin.");
+
+                }
+            }
+            else {
+                System.out.println("No user found with ID: " + custId);
+            }
+
+    } catch (SQLException e) {
+            System.out.println("Admin Check SQL Error: " + e.getMessage());
+
+    } catch (Exception e) {
+            System.out.println("Unexpected Admin Check Error: " + e.getMessage());
+        }
+    }
 
     //Sets current user ID after login, and while accessing MainApplication
     public void setCurrentUser(int userId) {
         System.out.println("DEBUG: setCurrentUser called with userId = " + userId);
         this.currentUserId = userId;
         loadUserFlights();
+        adminCheck(userId);
         System.out.println("DEBUG: User flights loaded, count = " + userFlights.size());
 
     }
