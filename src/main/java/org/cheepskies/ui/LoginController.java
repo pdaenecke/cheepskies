@@ -2,6 +2,7 @@ package org.cheepskies.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -9,6 +10,8 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import org.cheepskies.common.ValueObject;
 
@@ -34,13 +37,27 @@ public class LoginController {
     private ImageView imageBird;
 
     @FXML
+    private Hyperlink forgotHyperlink;
+
+    @FXML
+    void forgotPassword(MouseEvent event) throws IOException{
+        System.out.println("working");
+        try {
+            PasswordApplication.openPassword();
+        } catch (IOException e) {
+            System.out.print(e);
+        }
+    }
+
+    @FXML
     void loginAttempt(MouseEvent event) {
 
         String user = username.getText();
         String pass = password.getText();
 
         ValueObject vo = new ValueObject();
-        vo.getCustomer().credentials(user, pass);
+        vo.getCustomer().setUsername(user);
+        vo.getCustomer().setPassword(pass);
         vo.setAction("login");
 
         Customer c = vo.getCustomer();

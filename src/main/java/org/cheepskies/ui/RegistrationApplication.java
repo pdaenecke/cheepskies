@@ -13,7 +13,7 @@ public class RegistrationApplication {
         FXMLLoader fxmlLoader = new FXMLLoader(RegistrationApplication.class.getResource("/org/gui/cheepskies/registration-page.fxml"));
 
         Stage stage = new Stage();
-        Scene scene = new Scene(fxmlLoader.load(), 400, 600);
+        Scene scene = new Scene(fxmlLoader.load(), 400, 650);
 
         stage.setTitle("Registration");
         stage.setScene(scene);

@@ -3,6 +3,7 @@ package org.cheepskiesdb;
 import org.cheepskies.common.ValueObject;
 import org.cheepskies.ui.Customer;
 import org.cheepskies.ui.Flight;
+import org.cheepskiesexceptions.RecoveryQuestionException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -106,6 +107,35 @@ public class DatabaseUtils {
         }
     }
 
+    public static boolean recoveryScan(Customer customer) {
+        String query = "SELECT security_answer, password FROM credentials WHERE username = ?";
+
+        try (Connection conn = DatabaseConnector.dbConnect(); PreparedStatement statement = conn.prepareStatement(query)) {
+
+            statement.setString(1, customer.getUsername());
+
+            ResultSet rs = statement.executeQuery();
+
+            if (!rs.next()) {
+                return false;
+            }
+
+            String answer = rs.getString("security_answer");
+            String password = rs.getString("password");
+
+            if (answer.equals(customer.getAnswer())) {
+                customer.setPassword(password);
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error recovering password: " + e.getMessage());
+            return false;
+        }
+    }
+
     public static boolean usernameScan(Customer customer) {
         String query = "SELECT 1 FROM credentials WHERE username = ? LIMIT 1";
 
@@ -121,7 +151,7 @@ public class DatabaseUtils {
             return rs.next();
 
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("Error scanning for username: " + e.getMessage());
             return false;
         }
     }
@@ -152,7 +182,7 @@ public class DatabaseUtils {
             return pass.equals(customer.getPassword());
 
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("Error validating login:" + e.getMessage());
             return false;
         }
 
@@ -181,7 +211,7 @@ public class DatabaseUtils {
             }
 
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("Error logging in: " + e.getMessage());
         }
     }
 

@@ -22,6 +22,7 @@ public class Customer extends User {
     public void credentials(String username, String password, String answer) {
         this.username = username;
         this.password = password;
+        this.answer = answer;
     }
 
     // Customer table information

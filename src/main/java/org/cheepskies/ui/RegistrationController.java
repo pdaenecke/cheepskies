@@ -82,7 +82,7 @@ public class RegistrationController {
 
         // sql queries
         String sqlCustomers = "INSERT INTO customers (first_name, middle_initial, last_name, email) VALUES (?, ?, ?, ?)";
-        String sqlCredentials = "INSERT INTO credentials (customer_id, username, password) VALUES (?, ?, ?)";
+        String sqlCredentials = "INSERT INTO credentials (customer_id, username, password, security_answer) VALUES (?, ?, ?, ?)";
 
         // connects to database using databaseConnect method
         try (Connection connection = DatabaseConnector.dbConnect()) {
@@ -112,6 +112,7 @@ public class RegistrationController {
                 statement.setInt(1, id);
                 statement.setString(2, user);
                 statement.setString(3, pass);
+                statement.setString(4, secure);
                 statement.executeUpdate();
 
             }
@@ -119,7 +120,7 @@ public class RegistrationController {
             //inject SQL statement to pull login cred
             //try ()
 
-            registrationStatus.setText("Registration complete. Press x to login.");
+            registrationStatus.setText("Registration complete.");
             System.out.print("Registration complete.");
 
         } catch (SQLException e) {

@@ -1,5 +1,7 @@
 package org.cheepskies.bizlogic;
 
+import com.google.protobuf.Value;
+import javafx.scene.chart.PieChart;
 import org.cheepskies.common.ValueObject;
 import org.cheepskies.ui.Customer;
 import org.cheepskies.ui.Flight;
@@ -102,4 +104,17 @@ public class BizLogic {
         }
     }
 
+    public boolean recoverPassword(ValueObject vo) throws RecoveryQuestionException {
+        Customer c = vo.getCustomer();
+
+        boolean ok = DatabaseUtils.recoveryScan(c);
+
+        if (ok) {
+            vo.setAction("recovery_success");
+            vo.operationResult = true;
+            return true;
+        } else {
+            throw new RecoveryQuestionException("Recovery question verification failed.");
+        }
+    }
 }
