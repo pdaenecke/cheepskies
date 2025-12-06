@@ -3,6 +3,7 @@ package org.cheepskies.ui;
 import java.util.ArrayList;
 
 public class Flight {
+
     private String departureLocation;
     private String departureTime;
     private String arrivalLocation;

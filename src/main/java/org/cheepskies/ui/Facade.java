@@ -22,6 +22,8 @@ public class Facade {
                 case "removeFlight":
                     vo.operationResult = bizlogic.removeFlightFromCustomer(vo);
                     break;
+                case "updateFlight":
+                    vo.operationResult = bizlogic.updateFlight(vo);
                 case "searchFlight":
                     vo.operationResult = bizlogic.searchFlights(vo);
                     break;
@@ -30,6 +32,9 @@ public class Facade {
                     break;
                 case "register":
                     vo.operationResult = bizlogic.register(vo);
+                    break;
+                case "adminAddFlight":
+                    vo.operationResult = bizlogic.adminAddFlight(vo);
                     break;
             }
             // catch block contains the exceptions for our bizlogic functions

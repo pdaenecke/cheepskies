@@ -518,6 +518,38 @@ public class DatabaseUtils {
         return flightsReturn;
     }
 
+    public static boolean addFlight(Flight flight) throws SQLException {
+
+        String query = "INSERT INTO flights (departurelocation, departuretime, arrivallocation, arrivaltime, flightduration, departuredate, price) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DatabaseConnector.dbConnect();
+             PreparedStatement stmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, flight.getDepartureLocation());
+            stmt.setString(2, flight.getDepartureTime());
+            stmt.setString(3, flight.getArrivalLocation());
+            stmt.setString(4, flight.getArrivalTime());
+            stmt.setString(5, flight.getFlightDuration());
+            stmt.setString(6, flight.getDepartureDate());
+            stmt.setDouble(7, flight.getPrice());
+
+            int rows = stmt.executeUpdate();
+            if (rows == 0) return false;
 
 
+            try (ResultSet keys = stmt.getGeneratedKeys()) {
+                if (keys.next()) {
+                    int generatedId = keys.getInt(1);
+                    flight.setFlightId(generatedId);
+                }
+            }
+
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Error inserting flight: " + e.getMessage());
+            return false;
+        }
+    }
 }

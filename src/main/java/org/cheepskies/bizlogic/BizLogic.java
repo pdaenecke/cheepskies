@@ -93,15 +93,25 @@ public class BizLogic {
 
     }
 
-    public boolean adminAddFlight(ValueObject vo) throws AddNewFlightException {
+    public boolean adminAddFlight(ValueObject vo) throws AddNewFlightException, SQLException {
+
         Flight flight = vo.getFlight();
 
-        if (DatabaseUtils.flightAlreadyExists(flight.getFlightId())) {
-            throw new AddNewFlightException("Flight already exists.");
-        }
-        else {
-            return true;
-        }
+       boolean ok = DatabaseUtils.addFlight(flight);
+       if (ok) {
+
+           vo.setAction("add_success");
+           vo.operationResult = true;
+           System.out.println("Flight added successfully with ID: " + flight.getFlightId());
+           return true;
+
+       } else {
+           throw new AddNewFlightException("Flight addition failed.");
+       }
+    }
+
+    public boolean updateFlight(ValueObject vo) throws UpdateFlightException {
+        return true;
     }
 
     public boolean register(ValueObject vo) throws RegistrationException {

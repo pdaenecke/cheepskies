@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.cheepskies.common.ValueObject;
 import org.cheepskiesdb.DatabaseConnector;
@@ -23,11 +24,35 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
     private ObservableList<Flight> allFlights;
+
+    @FXML
+    private TextField departureTimeTextbox;
+
+    @FXML
+    private TextField arrivalTimeTextbox;
+
+    @FXML
+    private Button adminAddFlight;
+
+    @FXML
+    private Label adminOnlyLabel;
+
+    @FXML
+    private Button adminRemoveFlightSt;
+
+    @FXML
+    private Button adminSearchAllFlights;
+
+    @FXML
+    private Button adminUpdateFlight;
+
+    @FXML
+    private AnchorPane anchorPane;
+
     @FXML
     private TextField arrivalLocationTextBox;
 
@@ -36,9 +61,6 @@ public class AdminController implements Initializable {
 
     @FXML
     private Label arriveLocationLabel;
-
-    @FXML
-    private Button toMainMenuButton;
 
     @FXML
     private Label departDateLabel;
@@ -86,28 +108,14 @@ public class AdminController implements Initializable {
     private TextField priceTextBox;
 
     @FXML
+    private Text statusLabel;
+
+    @FXML
     private TableView<Flight> tableView;
 
-
     @FXML
-    private Button adminAddFlight;
+    private Button toMainMenuButton;
 
-    @FXML
-    private Label adminOnlyLabel;
-//button that displays warning message
-    @FXML
-    private Button adminRemoveFlightSt;
-
-    @FXML
-    private Button adminSearchAllFlights;
-
-    @FXML
-    private AnchorPane anchorPane;
-
-    @FXML
-    void removeFlightFromCustomer(MouseEvent event) throws SQLException, ClassNotFoundException{
-
-    }
     private int currentUserId;
 
     public void setCurrentUserId(int userId) {
@@ -162,10 +170,65 @@ public class AdminController implements Initializable {
     @FXML
     void addFlightClick(MouseEvent event) {
 
+        String departure = departLocTextBox.getText();
+        String arrival = arrivalLocationTextBox.getText();
+        String duration = flightDurTextBox.getText();
+        String date = departureDateTextBox.getText();
+        String priceGrab = priceTextBox.getText();
+        String departureTime = departureTimeTextbox.getText();
+        String arrivalTime = arrivalTimeTextbox.getText();
+
+        if (departure.isEmpty() || arrival.isEmpty() || duration.isEmpty() || date.isEmpty() ||
+                priceGrab.isEmpty() || departureTime.isEmpty() || arrivalTime.isEmpty()) {
+
+            statusLabel.setText("Missing fields");
+            return;
+
+        }
+
+        double price;
+
+        try {
+            price = Double.parseDouble(priceGrab);
+        } catch (NumberFormatException e) {
+            statusLabel.setText("Price format invalid");
+            return;
+        }
+
+        ValueObject vo = new ValueObject();
+        vo.setAction("adminAddFlight");
+
+        Flight flight = vo.getFlight();
+        flight.setDepartureLocation(departure);
+        flight.setArrivalLocation(arrival);
+        flight.setFlightDuration(duration);
+        flight.setDepartureDate(date);
+        flight.setPrice(price);
+        flight.setDepartureTime(departureTime);
+        flight.setArrivalTime(arrivalTime);
+
+        try {
+            Facade.process(vo);
+
+            if (vo.operationResult) {
+                statusLabel.setText("Flight added successfully");
+            } else {
+                statusLabel.setText("Failed to add flight");
+            }
+
+        } catch (Exception e) {
+            statusLabel.setText("Error: " + e.getMessage());
+        }
     }
+
 //displays warning message, does not delete with this button
     @FXML
     void removeFlightClickSt(MouseEvent event) {
+
+    }
+
+    @FXML
+    void updateFlightClick(MouseEvent event) {
 
     }
 
