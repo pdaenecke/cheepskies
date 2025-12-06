@@ -22,13 +22,14 @@ public class Facade {
                 case "removeFlight":
                     vo.operationResult = bizlogic.removeFlightFromCustomer(vo);
                     break;
-                case "register":
-                    //missing logic
                 case "searchFlight":
                     vo.operationResult = bizlogic.searchFlights(vo);
                     break;
                 case "passwordRecovery":
                     vo.operationResult = bizlogic.recoverPassword(vo);
+                    break;
+                case "register":
+                    vo.operationResult = bizlogic.register(vo);
                     break;
             }
             // catch block contains the exceptions for our bizlogic functions
@@ -53,7 +54,6 @@ public class Facade {
         } catch (AddNewFlightException e) {
             vo.operationResult = false;
             System.out.println("(Admin) Add new flight error: " + e.getMessage());
-
             //ky add new exceptions for searching, delete, update
         } catch (RecoveryQuestionException e) {
             vo.operationResult = false;

@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import org.cheepskies.common.ValueObject;
 import org.cheepskiesdb.DatabaseConnector;
 
 import java.sql.Connection;
@@ -53,78 +54,41 @@ public class RegistrationController {
         String mail = email.getText();
         String secure = security.getText();
 
-        // checks if any fields are empty
-        if (first.isEmpty() || last.isEmpty() || middle.isEmpty() || user.isEmpty() || pass.isEmpty() || mail.isEmpty() || secure.isEmpty()) {
+        if (first.isEmpty() || last.isEmpty() || middle.isEmpty() ||
+                user.isEmpty() || pass.isEmpty() || mail.isEmpty() || secure.isEmpty()) {
             registrationStatus.setText("One or more fields are empty.");
             return;
         }
 
-        // checks if middle character is more than just an initial
         if (middle.length() > 1) {
             registrationStatus.setText("Middle initial is more than one character.");
             return;
         }
 
-        // these two methods are imported DatabaseUtils to check if the username or email already exist, if they do registration is cancelled.
-        if (DatabaseUtils.userScan(user)) {
-            registrationStatus.setText("Username already exists.");
-            return; // stops registration
-        }
+        ValueObject vo = new ValueObject();
+        Customer c = vo.getCustomer();
 
-        // ^
-        if (DatabaseUtils.emailScan(mail)) {
-            registrationStatus.setText("Email already exists.");
-            return; // stops registration
-        }
+        c.setFirstName(first);
+        c.setLastName(last);
+        c.setmI(middle);
+        c.setUsername(user);
+        c.setPassword(pass);
+        c.setEmail(mail);
+        c.setAnswer(secure);
 
-        // empty id object to store id in next code block
-        int id = 0;
+        vo.setAction("register");
 
-        // sql queries
-        String sqlCustomers = "INSERT INTO customers (first_name, middle_initial, last_name, email) VALUES (?, ?, ?, ?)";
-        String sqlCredentials = "INSERT INTO credentials (customer_id, username, password, security_answer) VALUES (?, ?, ?, ?)";
+        try {
+            Facade.process(vo);
 
-        // connects to database using databaseConnect method
-        try (Connection connection = DatabaseConnector.dbConnect()) {
-
-            // prepares the customer query, and grabs the generated key
-            try (PreparedStatement statement = connection.prepareStatement(sqlCustomers, PreparedStatement.RETURN_GENERATED_KEYS)) {
-                // sets the query up, and executes it
-                statement.setString(1, first);
-                statement.setString(2, middle);
-                statement.setString(3, last);
-                statement.setString(4, mail);
-                statement.executeUpdate();
-
-                // result set of generates keys
-                var keys = statement.getGeneratedKeys();
-
-                // if a key exists, sets id object to its value
-                if (keys.next()) {
-                    id = keys.getInt(1);
-                }
+            if (vo.operationResult) {
+                registrationStatus.setText("Registration complete.");
+            } else {
+                registrationStatus.setText("Registration failed.");  // error message from facade
             }
 
-            // same as above, preparing the sql statement for the credentials
-            try (PreparedStatement statement = connection.prepareStatement(sqlCredentials)) {
-
-                // sets the query up, including the foreign generated key from the customer query, and executes it
-                statement.setInt(1, id);
-                statement.setString(2, user);
-                statement.setString(3, pass);
-                statement.setString(4, secure);
-                statement.executeUpdate();
-
-            }
-
-            //inject SQL statement to pull login cred
-            //try ()
-
-            registrationStatus.setText("Registration complete.");
-            System.out.print("Registration complete.");
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            registrationStatus.setText("Error: " + e.getMessage());
         }
     }
 }

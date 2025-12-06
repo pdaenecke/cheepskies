@@ -66,6 +66,51 @@ public class DatabaseUtils {
         }
     }
 
+    public static int insertCustomer(Customer c) {
+        String sql = "INSERT INTO customers (first_name, middle_initial, last_name, email, admin) VALUES (?, ?, ?, ?, false)";
+
+        try (Connection conn = DatabaseConnector.dbConnect();
+             PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, c.getFirstName());
+            stmt.setString(2, c.getmI());
+            stmt.setString(3, c.getLastName());
+            stmt.setString(4, c.getEmail());
+
+            stmt.executeUpdate();
+
+            ResultSet keys = stmt.getGeneratedKeys();
+            if (keys.next()) {
+                return keys.getInt(1);
+            }
+            return -1;
+
+        } catch (SQLException e) {
+            System.out.println("Insert customer failed: " + e.getMessage());
+            return -1;
+        }
+    }
+
+    public static boolean insertCredentials(int id, String username, String password, String answer) {
+        String sql = "INSERT INTO credentials (customer_id, username, password, security_answer) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = DatabaseConnector.dbConnect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            stmt.setString(2, username);
+            stmt.setString(3, password);
+            stmt.setString(4, answer);
+
+            stmt.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Insert credentials failed: " + e.getMessage());
+            return false;
+        }
+    }
+
     public static boolean emailScan(String email) {
         String query = "SELECT 1 FROM customers WHERE email = ? LIMIT 1";
 

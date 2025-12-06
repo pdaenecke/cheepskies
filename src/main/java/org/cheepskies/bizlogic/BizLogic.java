@@ -104,6 +104,31 @@ public class BizLogic {
         }
     }
 
+    public boolean register(ValueObject vo) throws RegistrationException {
+        Customer c = vo.getCustomer();
+
+
+        if (DatabaseUtils.userScan(c.getUsername())) {
+            throw new RegistrationException("Username already exists.");
+        }
+
+        if (DatabaseUtils.emailScan(c.getEmail())) {
+            throw new RegistrationException("Email already exists.");
+        }
+
+        int id = DatabaseUtils.insertCustomer(c);
+        if (id == -1) {
+            throw new RegistrationException("Unable to save customer.");
+        }
+
+        boolean ok = DatabaseUtils.insertCredentials(id, c.getUsername(), c.getPassword(), c.getAnswer());
+        if (!ok) {
+            throw new RegistrationException("Unable to save credentials.");
+        }
+
+        return true;
+    }
+
     public boolean recoverPassword(ValueObject vo) throws RecoveryQuestionException {
         Customer c = vo.getCustomer();
 
