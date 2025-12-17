@@ -613,5 +613,5 @@ void goToAdminPageClick(MouseEvent event) {
     }
 }}
 
-//pushing for git contributions visibility, pt 2
+//pushing for git contributions visibility, pt 3...
 
